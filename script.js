@@ -1,3 +1,4 @@
+
 function gridGenerate(squares) {
     let gridContainer = document.querySelector("#gridContainer");
     let gridWidth = gridContainer.offsetWidth;
@@ -13,12 +14,12 @@ function gridGenerate(squares) {
     }
 }
 
-function paintSquare(e) {
-    e.target.style.backgroundColor = rainbow();
-}
-
 let currentSquare = document.getElementById("gridContainer");
 currentSquare.addEventListener("mouseover", paintSquare);
+
+function paintSquare(e) {
+    e.target.style.backgroundColor = "#333";
+}
 
 function rainbow() {
     let colourElements = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',
@@ -31,10 +32,19 @@ function rainbow() {
     return(currentColour.join(""));
 }
 
+function erase(e) {
+    e.target.style.backgroundColor = '#FFF'; 
+}
+
+// this is still in progress, will incrementally darken a square with each pass of the mouse
 function shadeSquare() {
     let shades = ["hsl(0, 0%, 100%", "hsl(0, 0%, 90%", "hsl(0, 0%, 80%", "hsl(0, 0%, 70%", 
     "hsl(0, 0%, 60%", "hsl(0, 0%, 50%", "hsl(0, 0%, 40%", "hsl(0, 0%, 30%", 
     "hsl(0, 0%, 20%", "hsl(0, 0%, 10%", "hsl(0, 0%, 0%"];
+    let currentShade = this.getAttribute('backgroundColor');
+    console.log(currentShade);
 }
 
-gridGenerate(32);
+let squares = prompt('Please enter your preferred grid dimensions, maximum of 100 - \
+e.g. enter 16 for a 16x16 square grid');
+gridGenerate(squares);
