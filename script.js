@@ -1,5 +1,16 @@
 
+if (document.getElementById("squaresChoice").value) {
+    squares = document.getElementById("squaresChoice").value;}
+else {
+    squares = "16";
+}
+
 function gridGenerate(squares) {
+    if (document.getElementById("squaresChoice").value) {
+        squares = document.getElementById("squaresChoice").value;}
+    else {
+        squares = "16";
+    }
     let gridContainer = document.querySelector("#gridContainer");
     let gridWidth = gridContainer.offsetWidth;
     let gridHeight = gridContainer.offsetHeight;
@@ -15,13 +26,26 @@ function gridGenerate(squares) {
 }
 
 let currentSquare = document.getElementById("gridContainer");
-currentSquare.addEventListener("mouseover", paintSquare);
+
+function paintMethod(choice) {
+    currentSquare.addEventListener("mouseover", choice);
+}
+
+const paintButton = document.querySelector('#paint');
+paintButton.addEventListener('click', () => {
+    paintMethod(paintSquare);
+});
 
 function paintSquare(e) {
     e.target.style.backgroundColor = "#333";
 }
 
-function rainbow() {
+const randomButton = document.querySelector('#random');
+randomButton.addEventListener('click', () => {
+    paintMethod(random);
+});
+
+function random(e) {
     let colourElements = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',
  'B', 'C', 'D', 'E', 'F'];
     let currentColour = ['#'];
@@ -29,11 +53,31 @@ function rainbow() {
         num = colourElements[Math.floor(Math.random() * 16)];
         currentColour.push(num);
     }
-    return(currentColour.join(""));
+    currentColour = (currentColour.join(""));
+    e.target.style.backgroundColor = currentColour;
 }
+
+const eraseButton = document.querySelector('#erase');
+eraseButton.addEventListener('click', () => {
+    paintMethod(erase);
+});
 
 function erase(e) {
     e.target.style.backgroundColor = '#FFF'; 
+}
+
+const resetButton = document.querySelector('#reset');
+resetButton.addEventListener('click', () => {
+    resetGrid();
+});
+
+function resetGrid() {
+    let currentGrid = document.getElementById("gridContainer");
+    while (currentGrid.firstChild) {
+        currentGrid.removeChild(currentGrid.firstChild);
+    }
+    gridGenerate(squares);
+    paintMethod(paint);
 }
 
 // this is still in progress, will incrementally darken a square with each pass of the mouse
@@ -45,6 +89,4 @@ function shadeSquare() {
     console.log(currentShade);
 }
 
-let squares = prompt('Please enter your preferred grid dimensions, maximum of 100 - \
-e.g. enter 16 for a 16x16 square grid');
-gridGenerate(squares);
+gridGenerate();
