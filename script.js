@@ -1,16 +1,11 @@
 
-if (document.getElementById("squaresChoice").value) {
-    squares = document.getElementById("squaresChoice").value;}
-else {
-    squares = "16";
-}
+// TO DO:
+// * Implement incremental shading function when painting
+// * Final styling tweaks
+// * Refactor/consolidate code
 
 function gridGenerate(squares) {
-    if (document.getElementById("squaresChoice").value) {
-        squares = document.getElementById("squaresChoice").value;}
-    else {
-        squares = "16";
-    }
+    checkGridChange();
     let gridContainer = document.querySelector("#gridContainer");
     let gridWidth = gridContainer.offsetWidth;
     let gridHeight = gridContainer.offsetHeight;
@@ -22,8 +17,17 @@ function gridGenerate(squares) {
         gridContainer.appendChild(gridSquare);
         gridSquare.style.width = squareWidth;
         gridSquare.style.height = squareHeight;
-    paintMethod(paintSquare); //default paint style
+    paintMethod(paintGrey); //default paint style
     }
+}
+
+function checkGridChange() {
+    if (document.getElementById("squaresChoice").value) {
+        squares = document.getElementById("squaresChoice").value;}
+    else {
+        squares = "16";
+    }
+    return squares;
 }
 
 let currentSquare = document.getElementById("gridContainer");
@@ -33,12 +37,13 @@ function paintMethod(choice) {
     currentSquare.addEventListener("mouseover", choice);
 }
 
-const paintButton = document.querySelector('#paint');
-paintButton.addEventListener('click', () => {
-    paintMethod(paintSquare);
+
+const greyButton = document.querySelector('#grey');
+greyButton.addEventListener('click', () => {
+    paintMethod(paintGrey);
 });
 
-function paintSquare(e) {
+function paintGrey(e) {
     e.target.style.backgroundColor = "#333";
 }
 
@@ -60,7 +65,6 @@ function random(e) {
     e.target.style.backgroundColor = currentColour;
 }
 
-
 const eraseButton = document.querySelector('#erase');
 eraseButton.addEventListener('click', () => {
     paintMethod(erase);
@@ -68,6 +72,21 @@ eraseButton.addEventListener('click', () => {
 
 function erase(e) {
     e.target.style.backgroundColor = '#FFF'; 
+}
+
+// this is still in progress, will incrementally darken a square with each pass of the mouse
+const shadeButton = document.querySelector('#shade');
+shadeButton.addEventListener('click', () => {
+    console.log(currentShade);
+    // paintMethod(shade);
+});
+
+function shadeSquare(e) {
+    let shades = ["hsl(0, 0%, 100%", "hsl(0, 0%, 90%", "hsl(0, 0%, 80%", "hsl(0, 0%, 70%", 
+    "hsl(0, 0%, 60%", "hsl(0, 0%, 50%", "hsl(0, 0%, 40%", "hsl(0, 0%, 30%", 
+    "hsl(0, 0%, 20%", "hsl(0, 0%, 10%", "hsl(0, 0%, 0%"];
+    let currentShade = e.getAttribute('backgroundColor');
+    console.log(currentShade);
 }
 
 
@@ -81,17 +100,8 @@ function resetGrid() {
     while (currentGrid.firstChild) {
         currentGrid.removeChild(currentGrid.firstChild);
     }
+    checkGridChange();
     gridGenerate(squares);
 }
 
-
-// this is still in progress, will incrementally darken a square with each pass of the mouse
-function shadeSquare() {
-    let shades = ["hsl(0, 0%, 100%", "hsl(0, 0%, 90%", "hsl(0, 0%, 80%", "hsl(0, 0%, 70%", 
-    "hsl(0, 0%, 60%", "hsl(0, 0%, 50%", "hsl(0, 0%, 40%", "hsl(0, 0%, 30%", 
-    "hsl(0, 0%, 20%", "hsl(0, 0%, 10%", "hsl(0, 0%, 0%"];
-    let currentShade = this.getAttribute('backgroundColor');
-    console.log(currentShade);
-}
-
-gridGenerate();
+gridGenerate(16);
