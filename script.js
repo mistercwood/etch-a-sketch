@@ -22,12 +22,14 @@ function gridGenerate(squares) {
         gridContainer.appendChild(gridSquare);
         gridSquare.style.width = squareWidth;
         gridSquare.style.height = squareHeight;
+    paintMethod(paintSquare); //default paint style
     }
 }
 
 let currentSquare = document.getElementById("gridContainer");
 
 function paintMethod(choice) {
+    currentSquare.removeEventListener("mouseover", choice);
     currentSquare.addEventListener("mouseover", choice);
 }
 
@@ -39,6 +41,7 @@ paintButton.addEventListener('click', () => {
 function paintSquare(e) {
     e.target.style.backgroundColor = "#333";
 }
+
 
 const randomButton = document.querySelector('#random');
 randomButton.addEventListener('click', () => {
@@ -57,6 +60,7 @@ function random(e) {
     e.target.style.backgroundColor = currentColour;
 }
 
+
 const eraseButton = document.querySelector('#erase');
 eraseButton.addEventListener('click', () => {
     paintMethod(erase);
@@ -65,6 +69,7 @@ eraseButton.addEventListener('click', () => {
 function erase(e) {
     e.target.style.backgroundColor = '#FFF'; 
 }
+
 
 const resetButton = document.querySelector('#reset');
 resetButton.addEventListener('click', () => {
@@ -77,8 +82,8 @@ function resetGrid() {
         currentGrid.removeChild(currentGrid.firstChild);
     }
     gridGenerate(squares);
-    paintMethod(paint);
 }
+
 
 // this is still in progress, will incrementally darken a square with each pass of the mouse
 function shadeSquare() {
