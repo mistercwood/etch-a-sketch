@@ -1,9 +1,4 @@
 
-// TO DO:
-// * Implement incremental shading function when painting
-// * Final styling tweaks
-// * Refactor/consolidate code
-
 function gridGenerate(squares) {
     checkGridChange();
     let gridContainer = document.querySelector("#gridContainer");
@@ -31,7 +26,6 @@ function checkGridChange() {
 
 let currentSquare = document.getElementById("gridContainer");
 
-// Removes existing event listener and sets new user choice when button for new painting style is clicked
 function paintMethod(choice) {
     clearListeners();
     currentSquare.addEventListener("mouseover", choice);
@@ -64,24 +58,36 @@ eraseButton.addEventListener('click', () => {
     paintMethod(erase);
 });
 
+const resetButton = document.querySelector('#reset');
+resetButton.addEventListener('click', resetGrid);
 
-// function to check if current square colour is already in rgba mode, increase alpha if it is, otherwise
-// set to white with 0.1 Alpha as a default state
+function resetGrid() {
+    let currentGrid = document.getElementById("gridContainer");
+    while (currentGrid.firstChild) {
+        currentGrid.removeChild(currentGrid.firstChild);
+    }
+    checkGridChange();
+    gridGenerate(squares);
+}
+
 function shadeSquare(e) {
-    let alpha;
     let newShade;
-    let currentShade = getComputedStyle(this).backgroundColor;
-    rgbArr = currentShade.split(/[\s,\()]+/);
-    if (rgbArr[0] == 'rbga') {
-        alpha = rgbArr[4] + 0.1;
-        newShade = 'rgba(' + rgbArr[1] + ', ' + rgbArr[2] + ', ' + rgbArr[3] + ', ' + alpha + ')';
-            }
+    let currentShade = getComputedStyle(e.target).backgroundColor;
+    let rgbArr = currentShade.split(/[\s,\()]+/);
+    if (rgbArr[0] === 'rgba') {
+        if (parseInt(rgbArr[4]) == 1) {
+            return;
+        }
+        else {
+            let newAlpha = parseFloat(rgbArr[4]) + 0.1;
+            newShade = 'rgba(' + rgbArr[1] + ', ' + rgbArr[2] + ', ' + rgbArr[3] + ', ' + newAlpha + ')';
+        }
+    }
     else {
         newShade = 'rgba(0, 0, 0, 0.1)'
     }
     e.target.style.backgroundColor = newShade;
 }
-// ^^this is still in progress, will incrementally darken squares with each pass of the mouse
 
 function paintGrey(e) {
     e.target.style.backgroundColor = "#333";
@@ -99,18 +105,6 @@ function random(e) {
 
 function erase(e) {
     e.target.style.backgroundColor = 'rgba(255, 255, 255, 1)';
-}
-
-const resetButton = document.querySelector('#reset');
-resetButton.addEventListener('click', resetGrid);
-
-function resetGrid() {
-    let currentGrid = document.getElementById("gridContainer");
-    while (currentGrid.firstChild) {
-        currentGrid.removeChild(currentGrid.firstChild);
-    }
-    checkGridChange();
-    gridGenerate(squares);
 }
 
 gridGenerate(25);
