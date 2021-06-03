@@ -46,25 +46,21 @@ function clearListeners() {
 
 const shadeButton = document.querySelector('#shadeSquare');
 shadeButton.addEventListener('click', () => {
-    clearListeners();
     paintMethod(shadeSquare);
 });
 
 const greyButton = document.querySelector('#paintGrey');
 greyButton.addEventListener('click', () => {
-    clearListeners();
     paintMethod(paintGrey);
 });
 
 const randomButton = document.querySelector('#random');
 randomButton.addEventListener('click', () => {
-    clearListeners();
     paintMethod(random);
 });
 
 const eraseButton = document.querySelector('#erase');
 eraseButton.addEventListener('click', () => {
-    clearListeners();
     paintMethod(erase);
 });
 
@@ -74,11 +70,10 @@ eraseButton.addEventListener('click', () => {
 function shadeSquare(e) {
     let alpha;
     let newShade;
-    let currentShade = e.target.style.backgroundColor;
+    let currentShade = getComputedStyle(this).backgroundColor;
     rgbArr = currentShade.split(/[\s,\()]+/);
-    console.log(rgbArr);
-    if (rgbArr[0] === 'rbga') {
-        alpha = rgbArr[-1] + 0.1;
+    if (rgbArr[0] == 'rbga') {
+        alpha = rgbArr[4] + 0.1;
         newShade = 'rgba(' + rgbArr[1] + ', ' + rgbArr[2] + ', ' + rgbArr[3] + ', ' + alpha + ')';
             }
     else {
