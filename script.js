@@ -1,4 +1,4 @@
-
+// All grid generators/handlers for individual squares:
 function gridGenerate(squares) {
     checkGridChange();
     let gridContainer = document.querySelector("#gridContainer");
@@ -17,7 +17,8 @@ function gridGenerate(squares) {
 
 function checkGridChange() {
     if (document.getElementById("squaresChoice").value) {
-        squares = document.getElementById("squaresChoice").value;}
+        (document.getElementById("squaresChoice").value) > 100 ? alert("Choose a value of 100 or less, please!")
+        : squares = document.getElementById("squaresChoice").value;}
     else {
         squares = "25";
     }
@@ -38,36 +39,9 @@ function clearListeners() {
     currentSquare.removeEventListener("mouseover", erase);
 }
 
-const shadeButton = document.querySelector('#shadeSquare');
-shadeButton.addEventListener('click', () => {
-    paintMethod(shadeSquare);
-});
-
-const greyButton = document.querySelector('#paintGrey');
-greyButton.addEventListener('click', () => {
-    paintMethod(paintGrey);
-});
-
-const randomButton = document.querySelector('#random');
-randomButton.addEventListener('click', () => {
-    paintMethod(random);
-});
-
-const eraseButton = document.querySelector('#erase');
-eraseButton.addEventListener('click', () => {
-    paintMethod(erase);
-});
-
-const resetButton = document.querySelector('#reset');
-resetButton.addEventListener('click', resetGrid);
-
-function resetGrid() {
-    let currentGrid = document.getElementById("gridContainer");
-    while (currentGrid.firstChild) {
-        currentGrid.removeChild(currentGrid.firstChild);
-    }
-    checkGridChange();
-    gridGenerate(squares);
+// All paint-style functions and button actions:
+function paintGrey(e) {
+    e.target.style.backgroundColor = "#333";
 }
 
 function shadeSquare(e) {
@@ -75,22 +49,13 @@ function shadeSquare(e) {
     let currentShade = getComputedStyle(e.target).backgroundColor;
     let rgbArr = currentShade.split(/[\s,\()]+/);
     if (rgbArr[0] === 'rgba') {
-        if (parseInt(rgbArr[4]) == 1) {
-            return;
+        let newAlpha = parseFloat(rgbArr[4]) + 0.1;
+        newShade = 'rgba(' + rgbArr[1] + ', ' + rgbArr[2] + ', ' + rgbArr[3] + ', ' + newAlpha + ')';
         }
-        else {
-            let newAlpha = parseFloat(rgbArr[4]) + 0.1;
-            newShade = 'rgba(' + rgbArr[1] + ', ' + rgbArr[2] + ', ' + rgbArr[3] + ', ' + newAlpha + ')';
-        }
-    }
     else {
         newShade = 'rgba(0, 0, 0, 0.1)'
     }
     e.target.style.backgroundColor = newShade;
-}
-
-function paintGrey(e) {
-    e.target.style.backgroundColor = "#333";
 }
 
 function random(e) {
@@ -107,4 +72,34 @@ function erase(e) {
     e.target.style.backgroundColor = 'rgba(255, 255, 255, 1)';
 }
 
+function resetGrid() {
+    let currentGrid = document.getElementById("gridContainer");
+    while (currentGrid.firstChild) {
+        currentGrid.removeChild(currentGrid.firstChild);
+    }
+    checkGridChange();
+    gridGenerate(squares);
+}
+
+// Buttons for changing paint styles and making grid choices:
+const shadeButton = document.querySelector('#shadeSquare');
+shadeButton.addEventListener('click', () => {
+    paintMethod(shadeSquare);
+});
+const greyButton = document.querySelector('#paintGrey');
+greyButton.addEventListener('click', () => {
+    paintMethod(paintGrey);
+});
+const randomButton = document.querySelector('#random');
+randomButton.addEventListener('click', () => {
+    paintMethod(random);
+});
+const eraseButton = document.querySelector('#erase');
+eraseButton.addEventListener('click', () => {
+    paintMethod(erase);
+});
+const resetButton = document.querySelector('#reset');
+resetButton.addEventListener('click', resetGrid);
+
+// Default grid on first page load:
 gridGenerate(25);

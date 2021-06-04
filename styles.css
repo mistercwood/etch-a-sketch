@@ -27,7 +27,7 @@ body {
     margin: 20px;
     width: 800px;
     height: 800px;
-    box-shadow: 10px 15px 25px 7px #888, -5px -5px 45px 5px rgb(180, 180, 180);
+    box-shadow: 10px 15px 25px 7px #888, -10px -10px 35px 3px rgb(199, 199, 199);
 }
 
 .gridSquare {
@@ -61,7 +61,7 @@ button {
 }
 
 button:hover {
-    box-shadow: inset 1px 1px 5px 1px #999;
+    box-shadow: inset 1px 1px 2px 1px #999, inset 1px 1px 5px 1px rgb(112, 112, 112);
 }
 
 #squaresChoice {
