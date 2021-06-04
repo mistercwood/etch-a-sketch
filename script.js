@@ -101,5 +101,6 @@ eraseButton.addEventListener('click', () => {
 const resetButton = document.querySelector('#reset');
 resetButton.addEventListener('click', resetGrid);
 
-// Default grid on first page load:
+// Default grid and paint method on first page load:
 gridGenerate(25);
+paintMethod(paintGrey);
