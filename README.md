@@ -2,6 +2,8 @@
 
 A digital representation of the classic toy, created as part of the curriculum for [The Odin Project](https://www.theodinproject.com).
 
+You can play with a live version [here](https://mistercwood.github.io/etch-a-sketch/)!
+
 Users can choose from multiple painting styles:
 
 * A default grey
