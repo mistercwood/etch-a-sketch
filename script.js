@@ -83,21 +83,17 @@ function resetGrid() {
 
 // Buttons for changing paint styles and making grid choices:
 const shadeButton = document.querySelector('#shadeSquare');
-shadeButton.addEventListener('click', () => {
-    paintMethod(shadeSquare);
-});
+shadeButton.addEventListener('click', () => paintMethod(shadeSquare));
+
 const greyButton = document.querySelector('#paintGrey');
-greyButton.addEventListener('click', () => {
-    paintMethod(paintGrey);
-});
+greyButton.addEventListener('click', () => paintMethod(paintGrey));
+
 const randomButton = document.querySelector('#random');
-randomButton.addEventListener('click', () => {
-    paintMethod(random);
-});
+randomButton.addEventListener('click', () => paintMethod(random));
+
 const eraseButton = document.querySelector('#erase');
-eraseButton.addEventListener('click', () => {
-    paintMethod(erase);
-});
+eraseButton.addEventListener('click', () => paintMethod(erase));
+
 const resetButton = document.querySelector('#reset');
 resetButton.addEventListener('click', resetGrid);
 
